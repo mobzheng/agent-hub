@@ -1,0 +1,3 @@
+/trace-agent/target/
+*.lst
+*.class
