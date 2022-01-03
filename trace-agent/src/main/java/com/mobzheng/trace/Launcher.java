@@ -3,6 +3,7 @@ package com.mobzheng.trace;
 
 import com.mobzheng.trace.collector.HttpServletCollector;
 import com.mobzheng.trace.collector.HttpURLCollector;
+import com.mobzheng.trace.collector.JdbcCollector;
 
 import java.lang.instrument.Instrumentation;
 
@@ -15,5 +16,6 @@ public class Launcher {
         System.out.println("mobzheng v1.0");
         instr.addTransformer(new HttpServletCollector());
         HttpURLCollector.registerProtocol();
+        instr.addTransformer(new JdbcCollector());
     }
 }

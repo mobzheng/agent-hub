@@ -1,6 +1,8 @@
 package com.mobzheng.trace.collector;
 
 import com.mobzheng.trace.AgentSession;
+import com.mobzheng.trace.log.Log;
+import com.mobzheng.trace.log.LogFactory;
 import com.mobzheng.trace.model.HttpRequestInfo;
 import javassist.*;
 
@@ -13,6 +15,7 @@ import java.util.Map;
 
 public class HttpServletCollector implements Collector, ClassFileTransformer {
 
+    private static final Log logger = LogFactory.getLog(HttpServletCollector.class);
     private static final String TARGET_CLASS = "javax.servlet.http.HttpServlet";
     private static final String TARGET_METHOD = "service";
 
@@ -32,7 +35,7 @@ public class HttpServletCollector implements Collector, ClassFileTransformer {
         if (null == className || !TARGET_CLASS.equals(className.replace("/", "."))) {
             return null;
         }
-        System.out.println("===========================servlet插桩开始===========================");
+        logger.debug("===========================servlet插桩开始===========================");
 
         byte[] bytes = null;
         try {
@@ -61,9 +64,9 @@ public class HttpServletCollector implements Collector, ClassFileTransformer {
 
 
             bytes = ctClass.toBytecode();
-            System.out.println("===========================servlet插桩成功===========================");
+            logger.debug("===========================servlet插桩成功===========================");
         } catch (Exception e) {
-            System.out.println("===========================servlet插桩失败===========================");
+            logger.warn("===========================servlet插桩失败===========================");
             e.printStackTrace();
         }
         return bytes;
@@ -93,7 +96,7 @@ public class HttpServletCollector implements Collector, ClassFileTransformer {
         info.spanId = session.getParentId();
         info.traceId = session.getTraceId();
         session.put(info);
-        System.out.println("请求开始：" + info);
+        logger.info("请求开始：" + info);
         return info;
     }
 
@@ -101,15 +104,16 @@ public class HttpServletCollector implements Collector, ClassFileTransformer {
     public static void end(Object info) {
         HttpRequestInfo requestInfo = (HttpRequestInfo) info;
         requestInfo.end = System.nanoTime();
+        requestInfo.useTime = requestInfo.getBegin() - requestInfo.end;
         AgentSession.close();
-        System.out.println("请求结束：" + info);
+        logger.info("请求结束：" + info);
     }
 
 
     public static void error(Exception e, Object info) {
         HttpRequestInfo requestInfo = (HttpRequestInfo) info;
         requestInfo.error = e.getMessage();
-        System.out.println("请求错误");
+        logger.error("请求错误");
         e.printStackTrace();
     }
 
