@@ -1,11 +1,13 @@
 package com.mobzheng.trace;
 
 
+import com.alibaba.ttl.TransmittableThreadLocal;
+
 import java.util.UUID;
 
 public class AgentSession {
     // 需要解决跨线程问题
-    private static ThreadLocal<AgentSession> currentSession = new ThreadLocal<>();
+    private static final ThreadLocal<AgentSession> currentSession = new TransmittableThreadLocal<>();
     public static final String TRACE_ID_KEY = "agent-traceId";
     public static final String PARENT_ID_KEY = "agent-parentId";
     private String traceId;
