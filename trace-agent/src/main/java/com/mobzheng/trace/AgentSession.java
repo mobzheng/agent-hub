@@ -12,6 +12,7 @@ public class AgentSession {
     public static final String PARENT_ID_KEY = "agent-parentId";
     private String traceId;
     private String parentId;
+    public  Object info;
     private int nextId = 0;
 
 
@@ -49,7 +50,7 @@ public class AgentSession {
 
     // 推送采集到的数据
     public void put(Object node) {
-
+        this.info = node;
         System.out.println("开始推送数据到各个节点");
     }
 
