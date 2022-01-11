@@ -32,7 +32,7 @@ public class PackageScaner {
     //扫描包
     public void scanPackage(String packageName) {
         //获得当前线程的上下文加载器
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader classLoader = this.getClass().getClassLoader();
         //将包名转化URL的文件路径的格式
         String path = packageName.replace(".", "/");
 
@@ -85,7 +85,7 @@ public class PackageScaner {
 
                 try {
                     //获得类对象，并且用抽象方法处理
-                    Class<?> klass = Class.forName(className);
+                    Class<?> klass = this.getClass().getClassLoader().loadClass(className);
 //                    dealClass(klass);
                     accept.accept(klass);
                 } catch (ClassNotFoundException e) {

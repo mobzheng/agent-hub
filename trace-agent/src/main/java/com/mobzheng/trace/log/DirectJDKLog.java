@@ -18,6 +18,8 @@
 package com.mobzheng.trace.log;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.*;
 
 /**
@@ -25,7 +27,7 @@ import java.util.logging.*;
  * <p>
  * In addition, it curr
  */
-class DirectJDKLog implements Log {
+public class DirectJDKLog implements Log {
 
     private static FileHandler fileHandler;
     private static ConsoleHandler consoleHandler;
@@ -34,15 +36,33 @@ class DirectJDKLog implements Log {
     private String name;
     private Handler[] handlers;
 
-    public DirectJDKLog(String name) {
+
+    static {
         consoleHandler = new ConsoleHandler();
+        try {
+            String pattern = System.getProperty("log.path", System.getProperty("user.dir") + "/traceLog/");
+            String logPath = pattern.endsWith("/") ? pattern + "agent.log" : pattern + "/agent.log";
+            File file = new File(pattern);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            fileHandler = new FileHandler(logPath, true);
+            fileHandler.setFormatter(new SimpleFormatter());
+        } catch (IOException ignored) {
+
+        }
+
+    }
+
+    public DirectJDKLog(String name) {
+        fileHandler.setLevel(currentLevel);
         consoleHandler.setLevel(currentLevel);
         this.name = name;
         if (fileHandler == null && consoleHandler == null) {
             throw new IllegalStateException("未初始化日志处理器。调用DirectJDKLog.init 进行初始化");
         }
 
-        handlers = new Handler[]{ consoleHandler};
+        handlers = new Handler[]{consoleHandler, fileHandler};
     }
 
 
@@ -157,9 +177,9 @@ class DirectJDKLog implements Log {
     }
 
     // from commons logging. This would be my number one reason why java.util.logging
-    // is bad - design by committee can be really bad ! The impact on performance of 
+    // is bad - design by committee can be really bad ! The impact on performance of
     // using java.util.logging - and the ugliness if you need to wrap it - is far
-    // worse than the unfriendly and uncommon default format for logs. 
+    // worse than the unfriendly and uncommon default format for logs.
 
     private void log(Level level, String msg, Throwable ex) {
         if (!isLoggable(level)) {
@@ -198,6 +218,7 @@ class DirectJDKLog implements Log {
     static Log getInstance(String name) {
         return new DirectJDKLog(name);
     }
+
 }
 
 

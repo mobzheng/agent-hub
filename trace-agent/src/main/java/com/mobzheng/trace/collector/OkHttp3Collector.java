@@ -149,23 +149,6 @@ public class OkHttp3Collector implements Collector, ClassFileTransformer {
                 throw new RuntimeException(e);
             }
         }
-
-
-    }
-
-
-    public OkHttp3Collector() {
-    }
-
-    public OkHttp3Collector(String a, CtClass ctClass) {
-
-    }
-
-    public static void main(String[] args) throws NotFoundException {
-        System.out.println();
-        ClassPool aDefault = ClassPool.getDefault();
-        CtClass ctClass = aDefault.get(OkHttp3Collector.class.getName());
-        System.out.println(ctClass.getConstructor("(Ljava/lang/String;Ljavassist/CtClass;)V"));
     }
 
 }

@@ -2,10 +2,13 @@ package com.mobzheng.trace;
 
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import com.mobzheng.trace.log.Log;
+import com.mobzheng.trace.log.LogFactory;
 
 import java.util.UUID;
 
 public class AgentSession {
+    static final Log logger = LogFactory.getLog(AgentSession.class);
     // 需要解决跨线程问题
     private static final ThreadLocal<AgentSession> currentSession = new TransmittableThreadLocal<>();
     public static final String TRACE_ID_KEY = "agent-traceId";
@@ -51,7 +54,7 @@ public class AgentSession {
     // 推送采集到的数据
     public void put(Object node) {
         this.info = node;
-        System.out.println("开始推送数据到各个节点");
+        logger.debug("开始推送数据到各个节点");
     }
 
     public String getTraceId() {
