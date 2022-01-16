@@ -41,7 +41,7 @@ public class OkHttp3Collector implements Collector, ClassFileTransformer {
             return null;
         }
 
-        logger.debug("===========================okhttp3插桩开始===========================");
+        logger.debug("===========================okhttp3 enhance init===========================");
 
         byte[] bytes = null;
         try {
@@ -71,7 +71,7 @@ public class OkHttp3Collector implements Collector, ClassFileTransformer {
                     "}";
             ctMethod.setBody(body);
             bytes = ctClass.toBytecode();
-            logger.debug("===========================okhttp3插桩成功===========================");
+            logger.debug("===========================okhttp3 enhance success===========================");
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("===========================okhttp3插桩失败===========================");

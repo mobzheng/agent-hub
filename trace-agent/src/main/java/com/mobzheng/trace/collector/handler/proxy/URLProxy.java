@@ -3,6 +3,7 @@ package com.mobzheng.trace.collector.handler.proxy;
 import com.mobzheng.trace.AgentSession;
 import com.mobzheng.trace.log.Log;
 import com.mobzheng.trace.log.LogFactory;
+import com.mobzheng.trace.model.HttpRequestInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,10 +49,20 @@ public class URLProxy extends HttpURLConnection {
 
     @Override
     public void connect() throws IOException {
-        logger.info("开始建立连接：" + urlConnection.getURL());
+        logger.debug("begin connect：" + urlConnection.getURL());
+        HttpRequestInfo info = new HttpRequestInfo();
         long begin = System.nanoTime();
+        info.begin = begin;
         urlConnection.connect();
-        logger.info("连接耗时：" + (System.nanoTime() - begin));
+        info.end = System.nanoTime();
+        info.useTime = info.end - info.begin;
+        AgentSession session = AgentSession.get();
+        if (session != null) {
+            info.traceId = session.getTraceId();
+            info.spanId = session.getParentId();
+            session.put(info);
+        }
+        logger.debug("connect cost time ：" + info.useTime);
     }
 
     @Override

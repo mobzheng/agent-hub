@@ -1,6 +1,6 @@
 package com.mobzheng.trace.model;
 
-public class HttpRequestInfo extends BaseNode{
+public class HttpRequestInfo extends BaseNode {
 
     public String url;
     public String clientIp;
@@ -9,6 +9,11 @@ public class HttpRequestInfo extends BaseNode{
     public String httpParams;
     public String code;
     public String codeStack;
+
+
+    public HttpRequestInfo() {
+        super.modelType = "httpRequest";
+    }
 
     public String getUrl() {
         return url;
@@ -60,21 +65,36 @@ public class HttpRequestInfo extends BaseNode{
 
     @Override
     public String toString() {
-        return "HttpRequestInfo{" +
-                "traceId='" + traceId + '\'' +
-                ", spanId='" + spanId + '\'' +
-                ", begin=" + begin +
-                ", useTime=" + useTime +
-                ", end=" + end +
-                ", appName='" + appName + '\'' +
-                ", host='" + host + '\'' +
-                ", modelType='" + modelType + '\'' +
-                ", url='" + url + '\'' +
-                ", clientIp='" + clientIp + '\'' +
-                ", error='" + error + '\'' +
-                ", httpParams='" + httpParams + '\'' +
-                ", code='" + code + '\'' +
-                ", codeStack='" + codeStack + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"traceId\":\"")
+                .append(traceId).append('\"');
+        sb.append(",\"spanId\":\"")
+                .append(spanId).append('\"');
+        sb.append(",\"begin\":")
+                .append(begin);
+        sb.append(",\"useTime\":")
+                .append(useTime);
+        sb.append(",\"end\":")
+                .append(end);
+        sb.append(",\"appName\":\"")
+                .append(appName).append('\"');
+        sb.append(",\"host\":\"")
+                .append(host).append('\"');
+        sb.append(",\"modelType\":\"")
+                .append(modelType).append('\"');
+        sb.append(",\"url\":\"")
+                .append(url).append('\"');
+        sb.append(",\"clientIp\":\"")
+                .append(clientIp).append('\"');
+        sb.append(",\"error\":\"")
+                .append(error).append('\"');
+        sb.append(",\"httpParams\":\"")
+                .append(httpParams).append('\"');
+        sb.append(",\"code\":\"")
+                .append(code).append('\"');
+        sb.append(",\"codeStack\":\"")
+                .append(codeStack).append('\"');
+        sb.append('}');
+        return sb.toString();
     }
 }

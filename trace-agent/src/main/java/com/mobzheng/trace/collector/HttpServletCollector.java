@@ -35,7 +35,7 @@ public class HttpServletCollector implements Collector, ClassFileTransformer {
         if (null == className || !TARGET_CLASS.equals(className.replace("/", "."))) {
             return null;
         }
-        logger.debug("===========================servlet插桩开始===========================");
+        logger.debug("===========================servlet enhance init===========================");
 
         byte[] bytes = null;
         try {
@@ -64,9 +64,9 @@ public class HttpServletCollector implements Collector, ClassFileTransformer {
 
 
             bytes = ctClass.toBytecode();
-            logger.debug("===========================servlet插桩成功===========================");
+            logger.debug("===========================servlet enhance success===========================");
         } catch (Exception e) {
-            logger.warn("===========================servlet插桩失败===========================");
+            logger.warn("===========================servlet enhance fail===========================");
             e.printStackTrace();
         }
         return bytes;

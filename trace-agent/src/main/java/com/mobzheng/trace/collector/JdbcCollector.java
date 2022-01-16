@@ -45,7 +45,7 @@ public class JdbcCollector implements Collector, ClassFileTransformer {
             return null;
         }
 
-        logger.debug("===========================mysql插桩开始===========================");
+        logger.debug("===========================mysql  enhance init===========================");
 
         byte[] bytes = null;
         try {
@@ -61,9 +61,9 @@ public class JdbcCollector implements Collector, ClassFileTransformer {
             String body = "{return (java.sql.Connection)com.mobzheng.trace.collector.JdbcCollector.getConnectionProxy((java.sql.Connection)this.connect$agent($$));}";
             ctMethod.setBody(body);
             bytes = ctClass.toBytecode();
-            logger.debug("===========================mysql插桩成功===========================");
+            logger.debug("===========================mysql enhance success===========================");
         } catch (Exception e) {
-            logger.error("===========================mysql插桩失败===========================");
+            logger.error("===========================mysql enhance fail===========================");
         }
 
         return bytes;
@@ -144,7 +144,7 @@ public class JdbcCollector implements Collector, ClassFileTransformer {
         info.sql = sqlStr;
         info.end = System.nanoTime();
         info.useTime = info.begin - info.end;
-        logger.info("sql执行：" + info);
+        logger.info("sql execute { " + info+" }");
     }
 
 

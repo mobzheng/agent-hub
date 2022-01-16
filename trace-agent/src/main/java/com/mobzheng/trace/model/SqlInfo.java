@@ -11,21 +11,39 @@ public class SqlInfo extends BaseNode{
     // 异常信息
     public String error;
 
+
+    public SqlInfo() {
+        super.modelType = "sql";
+    }
+
     @Override
     public String toString() {
-        return "SqlInfo{" +
-                "traceId='" + traceId + '\'' +
-                ", spanId='" + spanId + '\'' +
-                ", begin=" + begin +
-                ", useTime=" + useTime +
-                ", end=" + end +
-                ", appName='" + appName + '\'' +
-                ", host='" + host + '\'' +
-                ", modelType='" + modelType + '\'' +
-                ", jdbcUrl='" + jdbcUrl + '\'' +
-                ", sql='" + sql + '\'' +
-                ", databaseName='" + databaseName + '\'' +
-                ", error='" + error + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"traceId\":\"")
+                .append(traceId).append('\"');
+        sb.append(",\"spanId\":\"")
+                .append(spanId).append('\"');
+        sb.append(",\"begin\":")
+                .append(begin);
+        sb.append(",\"useTime\":")
+                .append(useTime);
+        sb.append(",\"end\":")
+                .append(end);
+        sb.append(",\"appName\":\"")
+                .append(appName).append('\"');
+        sb.append(",\"host\":\"")
+                .append(host).append('\"');
+        sb.append(",\"modelType\":\"")
+                .append(modelType).append('\"');
+        sb.append(",\"jdbcUrl\":\"")
+                .append(jdbcUrl).append('\"');
+        sb.append(",\"sql\":\"")
+                .append(sql).append('\"');
+        sb.append(",\"databaseName\":\"")
+                .append(databaseName).append('\"');
+        sb.append(",\"error\":\"")
+                .append(error).append('\"');
+        sb.append('}');
+        return sb.toString();
     }
 }
