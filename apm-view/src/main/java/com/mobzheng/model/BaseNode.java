@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 public class BaseNode implements Serializable {
 
+    public String id;
     public String traceId;
     public String spanId;
     public long begin;

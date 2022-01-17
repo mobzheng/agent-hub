@@ -1,6 +1,7 @@
 package com.mobzheng.controller;
 
 import com.mobzheng.dao.TraceRepository;
+import com.mobzheng.model.GraphView;
 import com.mobzheng.model.TraceNode;
 import com.mobzheng.service.TraceNode2Info;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,15 @@ public class GraphController {
 
     @RequestMapping("detail/{traceId}")
     @ResponseBody
-    public List getGraph(@PathVariable("traceId") String traceId) {
+    public GraphView getGraph(@PathVariable("traceId") String traceId) {
         List<TraceNode> traceNodes = traceRepository.findByTraceId(traceId);
-        return traceNode2Info.buildTraceNode(traceNodes);
+        List<Object> objects = traceNode2Info.buildTraceNode(traceNodes);
+        return traceNode2Info.buildView(objects);
+    }
+
+
+    @RequestMapping("open")
+    public String openGraph() {
+        return "trace_view";
     }
 }

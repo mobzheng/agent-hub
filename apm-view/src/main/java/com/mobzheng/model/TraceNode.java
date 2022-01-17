@@ -13,7 +13,7 @@ import java.util.Date;
 @Document(indexName = "apm", type = "doc")
 public class TraceNode {
     @Id
-    private String docId;
+    private String id;
     @Field(type = FieldType.Auto)
     private String traceId;
     @Field(type = FieldType.Auto)
