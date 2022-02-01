@@ -20,7 +20,7 @@ public class TraceNode2Info {
 
 
     public List<Object> buildTraceNode(List<TraceNode> traceNodes) {
-        return traceNodes.stream().flatMap(n -> process.stream().map(p -> p.apply(n))).collect(Collectors.toList());
+        return traceNodes.stream().flatMap(n -> process.stream().map(p -> p.apply(n))).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
 

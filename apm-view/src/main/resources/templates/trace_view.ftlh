@@ -2,9 +2,10 @@
 <!-- This code is for demonstration purposes only.  You should not hotlink to Github, Rawgit, or files from the Cytoscape.js documentation in your production apps. -->
 <html lang="en">
 <head>
-    <link href="../css/style.css" rel="stylesheet" />
-    <meta charset=utf-8 />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <link href="../css/style.css" rel="stylesheet"/>
+    <meta charset=utf-8/>
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
     <title>调用链拓扑图</title>
     <script src="../js/cytoscape.min.js"></script>
 </head>
@@ -17,7 +18,7 @@
         return response.json();
     }).then(function (json) {
 
-        var cy = cytoscape({
+        var cy = window.cy = cytoscape({
             container: document.getElementById('cy'),
             boxSelectionEnabled: false,
             autounselectify: true,
@@ -51,6 +52,9 @@
             ]
         }
     })
+
+
+
 
 
 

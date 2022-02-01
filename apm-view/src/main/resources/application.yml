@@ -1,11 +1,6 @@
 server:
   port: 8080
 spring:
-  data:
-    elasticsearch:
-      cluster-nodes: 47.96.41.209:9300
-      cluster-name: docker-cluster
-
   freemarker:
     template-loader-path: classpath:/templates/
     suffix: .ftlh # springboot 2.xx 后缀为 ftlh
@@ -13,3 +8,8 @@ spring:
 # 静态资源 js，css
   resources:
     static-locations: classpath:/static/
+logging:
+  level:
+    root: info
+elasticsearch:
+  url: 47.96.41.209:9200
