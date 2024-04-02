@@ -133,6 +133,9 @@ public class JdbcCollector implements Collector, ClassFileTransformer {
         sqlInfo.begin = System.nanoTime();
         sqlInfo.databaseName = "test";
         AgentSession session = AgentSession.get();
+        if (session == null) {
+            return sqlInfo;
+        }
         sqlInfo.traceId = session.getTraceId();
         sqlInfo.spanId = session.nextSpanId();
         return sqlInfo;
@@ -143,8 +146,8 @@ public class JdbcCollector implements Collector, ClassFileTransformer {
         SqlInfo info = (SqlInfo) sqlInfo;
         info.sql = sqlStr;
         info.end = System.nanoTime();
-        info.useTime = info.begin - info.end;
-        logger.info("sql execute { " + info+" }");
+        info.useTime = info.end - info.begin;
+        logger.info("sql execute { " + info + " }");
     }
 
 
